@@ -14,7 +14,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "./dist"),
-    filename: "main.js",
+    filename: "./js/main.js",
   },
   devtool: isDevelopment && "source-map",
   devServer: {
@@ -27,7 +27,7 @@ module.exports = {
         test: /\.(handlebars|hbs)$/,
         loader: "handlebars-loader",
         options: {
-          partialDirs: [path.join(__dirname, './src/html/partials')]
+          partialDirs: [path.join(__dirname, "./src/html/partials")],
         },
       },
       {
@@ -117,12 +117,12 @@ module.exports = {
       extensions: [".js", ".ts"],
     }),
     new MiniCssExtractPlugin({
-      filename: "main-styles.css",
+      filename: "./css/main-styles.css",
       chunkFilename: "[id].css",
     }),
     new HtmlWebpackPlugin({
       title: "First Page - HBS & WebPack",
-      template: "./src/index.hbs",
+      template: "./src/html/layouts/index.hbs",
       templateParameters: require("./src/html/data/index.json"),
       minify: !isDevelopment && {
         html5: true,
