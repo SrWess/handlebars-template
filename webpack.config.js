@@ -3,7 +3,7 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ESLintWebpackPlugin = require("eslint-webpack-plugin");
-const  PrettierPlugin = require("prettier-webpack-plugin");
+const PrettierPlugin = require("prettier-webpack-plugin");
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -13,7 +13,8 @@ module.exports = {
     bundle: "./src/app.js",
   },
   output: {
-    path: path.resolve(__dirname, "../dist"),
+    path: path.resolve(__dirname, "./dist"),
+    filename: "main.js",
   },
   devtool: isDevelopment && "source-map",
   devServer: {
@@ -22,7 +23,13 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.(handlebars|hbs)$/, loader: "handlebars-loader" },
+      {
+        test: /\.(handlebars|hbs)$/,
+        loader: "handlebars-loader",
+        options: {
+          partialDirs: [path.join(__dirname, './src/html/partials')]
+        },
+      },
       {
         test: /\.(scss|css)$/,
         use: [
@@ -31,7 +38,6 @@ module.exports = {
             loader: "css-loader",
             options: {
               sourceMap: isDevelopment,
-              // minimize: !isDevelopment,
             },
           },
           {
@@ -95,28 +101,29 @@ module.exports = {
       },
     }),
     new ESLintWebpackPlugin({
-      overrideConfigFile: path.resolve(__dirname, "../.eslintrc"),
-      context: path.resolve(__dirname, "../src"),
+      overrideConfigFile: path.resolve(__dirname, ".eslintrc"),
+      context: path.resolve(__dirname, "./src"),
       emitError: true,
       emitWarning: true,
       failOnError: true,
-      extensions: ['js'],
+      extensions: ["js"],
     }),
     new PrettierPlugin({
-      printWidth: 120, 
+      printWidth: 120,
       tabWidth: 2,
-      useTabs: true, 
-      semi: true, 
+      useTabs: true,
+      semi: true,
       encoding: "utf-8",
       extensions: [".js", ".ts"],
     }),
     new MiniCssExtractPlugin({
-      filename: "[name]-styles.css",
+      filename: "main-styles.css",
       chunkFilename: "[id].css",
     }),
     new HtmlWebpackPlugin({
       title: "First Page - HBS & WebPack",
       template: "./src/index.hbs",
+      templateParameters: require("./src/html/data/index.json"),
       minify: !isDevelopment && {
         html5: true,
         collapseWhitespace: true,
