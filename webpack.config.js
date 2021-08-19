@@ -27,7 +27,10 @@ module.exports = {
         test: /\.(handlebars|hbs)$/,
         loader: "handlebars-loader",
         options: {
-          partialDirs: [path.join(__dirname, "./src/html/partials")],
+          partialDirs: [
+            path.join(__dirname, "./src/html/partials"),
+            path.join(__dirname, "./src/html/pages")
+          ],
         },
       },
       {
@@ -121,7 +124,7 @@ module.exports = {
       chunkFilename: "[id].css",
     }),
     new HtmlWebpackPlugin({
-      title: "First Page - HBS & WebPack",
+      title: "Home",
       template: "./src/html/layouts/index.hbs",
       templateParameters: require("./src/html/data/index.json"),
       minify: !isDevelopment && {
