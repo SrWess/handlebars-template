@@ -1,1 +1,0 @@
-{"version":3,"file":"bundle-styles.css","mappings":"AAAA,KACE,cAAe","sources":["webpack://wess-portfolio-handlebars/./src/main.scss"],"sourcesContent":["body {\n  background: red;\n}\n"],"names":[],"sourceRoot":""}

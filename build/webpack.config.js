@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 module.exports = {
+  mode: isDevelopment ? "development" : "production",
   entry: {
     bundle: "./src/app.js",
   },
@@ -16,11 +17,10 @@ module.exports = {
   devServer: {
     port: 3000,
     open: true,
-    // contentBase: path.join(__dirname, "../src"),
   },
   module: {
     rules: [
-      { test: /\.handlebars$/, loader: "handlebars-loader" },
+      { test: /\.(handlebars|hbs)$/, loader: "handlebars-loader" },
       {
         test: /\.(scss|css)$/,
         use: [
@@ -98,7 +98,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       title: "First Page - HBS & WebPack",
-      template: "./src/index.handlebars",
+      template: "./src/index.hbs",
       minify: !isDevelopment && {
         html5: true,
         collapseWhitespace: true,
