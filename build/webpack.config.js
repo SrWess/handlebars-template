@@ -2,6 +2,8 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ESLintWebpackPlugin = require("eslint-webpack-plugin");
+const  PrettierPlugin = require("prettier-webpack-plugin");
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -91,6 +93,22 @@ module.exports = {
       options: {
         handlebarsLoader: {},
       },
+    }),
+    new ESLintWebpackPlugin({
+      overrideConfigFile: path.resolve(__dirname, "../.eslintrc"),
+      context: path.resolve(__dirname, "../src"),
+      emitError: true,
+      emitWarning: true,
+      failOnError: true,
+      extensions: ['js'],
+    }),
+    new PrettierPlugin({
+      printWidth: 120, 
+      tabWidth: 2,
+      useTabs: true, 
+      semi: true, 
+      encoding: "utf-8",
+      extensions: [".js", ".ts"],
     }),
     new MiniCssExtractPlugin({
       filename: "[name]-styles.css",
