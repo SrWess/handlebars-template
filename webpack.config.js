@@ -27,9 +27,10 @@ module.exports = {
         test: /\.(handlebars|hbs)$/,
         loader: "handlebars-loader",
         options: {
+          inlineRequires: /\/assets\//,
           partialDirs: [
             path.join(__dirname, "./src/html/partials"),
-            path.join(__dirname, "./src/html/pages")
+            path.join(__dirname, "./src/html/pages"),
           ],
         },
       },
@@ -61,35 +62,33 @@ module.exports = {
         ],
       },
       {
-        test: /\.(jpg|png|gif)?$/,
+        test: /\.(svg|png|jpe?g|gif)$/,
         use: [
           {
-            loader: "filename-loader",
+            loader: "file-loader",
             options: {
               name: "[name].[ext]",
-              outputPath: "static/",
-              useRelativePath: true,
+              outputPath: "assets/images",
+              esModule: false,
             },
           },
           {
             loader: "image-webpack-loader",
             options: {
-              mozjpeg: {
-                progressive: true,
-                quality: 65,
+              jpg: {
+                quality: "80",
               },
-              optipng: {
-                enabled: true,
+              png: {
+                quality: [0.7, 0.85],
               },
-              pngquant: {
-                quality: "65-90",
-                speed: 4,
+              gif: {
+                optimizationLevel: 2,
               },
-              gifsicle: {
-                interlaced: false,
+              svg: {
+                optimizationLevel: 6,
               },
               webp: {
-                quality: 75,
+                quality: 80,
               },
             },
           },
