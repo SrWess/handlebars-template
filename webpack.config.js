@@ -42,6 +42,7 @@ module.exports = {
             loader: "css-loader",
             options: {
               sourceMap: isDevelopment,
+              url: false,
             },
           },
           {
@@ -67,8 +68,8 @@ module.exports = {
           {
             loader: "file-loader",
             options: {
-              name: "[name].[ext]",
-              outputPath: "assets/images",
+              context: path.resolve(__dirname, 'src'),
+              name: "[path][name].[ext]",
               esModule: false,
             },
           },
